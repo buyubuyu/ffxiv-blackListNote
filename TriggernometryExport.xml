@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<TriggernometryExport Version="1">
+  <ExportedFolder Id="74be60d4-b0d7-4450-9be2-7ca021e3eb37" Name="永世珍本" Enabled="true">
+    <Folders />
+    <Triggers>
+      <Trigger Enabled="true" Name="4添加黑名单" Id="933d1678-4e19-4383-9d74-ccfee748b9e0" RegularExpression="^.{14} ChatLog 00:0038::添加黑名单:(?&lt;player&gt;.*?),(?&lt;remark&gt;.*?)$">
+        <Actions>
+          <Action OrderNumber="1" NamedCallbackName="saveCsv" NamedCallbackParam="${var:blackFile},${player},${remark},_NOW(&quot;yyyy/MM/dd HH:mm:ss&quot;)" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="false" Grouping="Or" />
+      </Trigger>
+      <Trigger Enabled="true" Sequential="True" Name="0加载黑名单" Id="28097743-2108-4ca5-8376-422046e1202e" RegularExpression="^.*" PeriodRefire="Deny" RefirePeriodExpression="86400000" Description="-by阴暗小肥 byy&#xD;&#xA;抄了抄自导随记录和古庙黑名单的写法 自己整了一个新的玩意儿">
+        <Actions>
+          <Action OrderNumber="1" VariableOp="SetNumeric" VariableName="battlenum" VariableExpression="55" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="Placeholder" ExecutionDelayExpression="10000" Asynchronous="False">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="2" VariableOp="SetString" VariableName="blackFile" VariableExpression="${_env[_DEFAULTCSVPATH_]}\DeathNote.csv" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="Variable" Asynchronous="False">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="3" DiskFileOp="ReadCSVIntoTableVariable" DiskFileOpName="${var:blackFile}" DiskFileOpVar="blackTable" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="DiskFile" Asynchronous="False">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="4" UseTTSTextExpression="永世珍本加载成功" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="UseTTS">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="false" Grouping="Or" />
+      </Trigger>
+      <Trigger Enabled="true" Name="1发现黑名单" Id="819af75f-2b3f-4aa7-9fef-3c54a334f357" RegularExpression="^.{14} ChatLog 00:0038::加载队友:(.*)">
+        <Actions>
+          <Action OrderNumber="1" NamedCallbackName="command" NamedCallbackParam="/e 小心黑名单:${tvarrl:blackTable[$1][0]},原因:${tvarrl:blackTable[$1][1]} &lt;se.10&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="2" LogMessageText="${player}" TextAuraFontSize="9" TextAuraFontName="宋体" Enabled="False" ActionType="LogMessage">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="true" Grouping="Or">
+          <ConditionSingle Enabled="true" ExpressionL="${tvarrl:blackTable[$1][0]}" ExpressionTypeL="String" ExpressionR="" ExpressionTypeR="String" ConditionType="StringNotEqualNocase" />
+        </Condition>
+      </Trigger>
+      <Trigger Enabled="true" Name="2加载队友id" Id="bf1a2a28-662a-447a-89ea-823c9e07fabe" RegularExpression="加载一下队友">
+        <Actions>
+          <Action OrderNumber="1" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;1&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" Enabled="False" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="2" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;2&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="3" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;3&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="4" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;4&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="5" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;5&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or">
+              <ConditionSingle Enabled="true" ExpressionL="${_ffxivparty[5]}" ExpressionTypeL="String" ExpressionTypeR="String" ConditionType="StringNotEqualNocase" />
+            </Condition>
+          </Action>
+          <Action OrderNumber="6" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;6&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or">
+              <ConditionSingle Enabled="true" ExpressionL="${_ffxivparty[6]}" ExpressionTypeL="String" ExpressionTypeR="String" ConditionType="StringNotEqualNocase" />
+            </Condition>
+          </Action>
+          <Action OrderNumber="7" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;7&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or">
+              <ConditionSingle Enabled="true" ExpressionL="${_ffxivparty[7]}" ExpressionTypeL="String" ExpressionTypeR="String" ConditionType="StringNotEqualNocase" />
+            </Condition>
+          </Action>
+          <Action OrderNumber="8" NamedCallbackName="command" NamedCallbackParam="/e 加载队友:&lt;8&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or">
+              <ConditionSingle Enabled="false" ExpressionL="${_ffxivparty[8]}" ExpressionTypeL="String" ExpressionTypeR="String" ConditionType="StringNotEqualNocase" />
+            </Condition>
+          </Action>
+        </Actions>
+        <Condition Enabled="false" Grouping="Or" />
+      </Trigger>
+      <Trigger Enabled="true" Sequential="True" Name="3自动查询哦" Id="1028210a-93f8-4e73-9d49-b3af25c50845" RegularExpression="^.{14} ChatLog 00:0839::“(?&lt;zone&gt;.*)”任务开始。$">
+        <Actions>
+          <Action OrderNumber="1" TextAuraFontSize="9" TextAuraFontName="宋体" TriggerId="bf1a2a28-662a-447a-89ea-823c9e07fabe" TriggerForce="regexp" ActionType="Trigger">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="true" Grouping="And">
+          <ConditionSingle Enabled="true" ExpressionL="${var:isMentor}" ExpressionTypeL="Numeric" ExpressionR="1" ExpressionTypeR="Numeric" ConditionType="NumericEqual" />
+        </Condition>
+      </Trigger>
+      <Trigger Enabled="true" Name="5有人进队了" Id="b2c0bc95-93be-403b-b0e4-915b3af3f6fb" RegularExpression="^.{15}00:.{2}39:(.*)加入了小队">
+        <Actions>
+          <Action OrderNumber="1" NamedCallbackName="command" NamedCallbackParam="/e 小心黑名单:${tvarrl:blackTable[$1][0]},原因:${tvarrl:blackTable[$1][1]} &lt;se.10&gt;" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="NamedCallback">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="true" Grouping="Or">
+          <ConditionSingle Enabled="true" ExpressionL="${tvarrl:blackTable[$1][0]}" ExpressionTypeL="String" ExpressionTypeR="String" ConditionType="StringNotEqualNocase" />
+        </Condition>
+      </Trigger>
+    </Triggers>
+  </ExportedFolder>
+</TriggernometryExport>
